@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""the route status"""
+""" Index module """
 from api.v1.views import app_views
-from flask import jsonify
+from flask import Flask, jsonify
+from models import storage
 
 
 @app_views.route("/status", methods=["GET"], strict_slashes=False)
@@ -12,8 +13,7 @@ def get_status():
 
 @app_views.route("/stats", methods=["GET"])
 def get_stats():
-    """returns number of each objects by type"""
-
+    """returns number of each objects"""
     from models import storage
 
     stats = {
@@ -24,3 +24,4 @@ def get_stats():
         "states": storage.count("State"),
         "users": storage.count("User"),
     }
+    return jsonify(stats)
